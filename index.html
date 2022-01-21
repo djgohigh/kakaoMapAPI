@@ -38,7 +38,7 @@
 		// lag, lng 위치로 이동도하고, 그 위에 마커도 쓴다.
 		function setCenter(lat, lng) {            
 			marker.setMap(null); // 기존마커 삭제
-			var pos = new kakao.maps.Latlng(lat, lng); // 내가 원하는 위치를 받아옴
+			var pos = new kakao.maps.LatLng(lat, lng); // 내가 원하는 위치를 받아옴
 			map.setCenter(pos); // 맵 이동
 			marker = new kakao.maps.Marker({position:pos})
 			marker.setMap(map);
