@@ -12,6 +12,8 @@
 	<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=10c466959bfcce2c464bf99a4988acb3"></script>
 	<script>
 	
+		// 지도를 생성한다 
+
 		var mapContainer = document.getElementById('map') // 지도를 표시할 div 
 		var mapOption = {
 			center: new kakao.maps.LatLng(35.877015, 128.626125), // 지도의 중심좌표
@@ -19,6 +21,8 @@
 			mapTypeId: kakao.maps.MapTypeId.ROADMAP // 지도종류
 		};
 		
+		var map = new kakao.maps.Map(mapContainer, mapOption);
+
 		if (navigator.geolocation) {
 
 			// GeoLocation을 이용해서 접속 위치를 얻어옵니다
@@ -37,9 +41,7 @@
 
 			displayMarker(locPosition, message);
 		}
-		
-		// 지도를 생성한다 
-		var map = new kakao.maps.Map(mapContainer, mapOption);
+	
 		// 마커 이미지의 주소
 		var markerImageUrl = 'https://github.com/peaks26/kakaoMapAPI/blob/main/index.png?raw=true',
 			markerImageSize = new kakao.maps.Size(40, 42), // 마커 이미지의 크기
