@@ -13,91 +13,146 @@
 	<script>
 		// 지도를 생성한다 
 
+		var positions = [{
+				title: '대구율하점', // 1
+				latlng: new kakao.maps.LatLng(35.866346, 128.696278)
+			},
+			{
+				title: '대구만촌점', // 2
+				latlng: new kakao.maps.LatLng(35.857015, 128.648724)
+			},
+			{
+				title: '대구삼성창조캠퍼스', // 3
+				latlng: new kakao.maps.LatLng(35.884415, 128.594601)
+			},
+			{
+				title: '대구지산점', // 4
+				latlng: new kakao.maps.LatLng(35.822765, 128.637659)
+			},
+			{
+				title: '대구평리DT점', // 5
+				latlng: new kakao.maps.LatLng(35.871548, 128.563483)
+			},
+			{
+				title: '대구성서이마트점', // 6
+				latlng: new kakao.maps.LatLng(35.853343, 128.510256)
+			},
+			{
+				title: '대구대점', // 7
+				latlng: new kakao.maps.LatLng(35.899310, 128.852610)
+			},
+			{
+				title: '대구죽전네거리DT', // 8
+				latlng: new kakao.maps.LatLng(35.849474, 128.535018)
+			},
+			{
+				title: '대구시지점', // 9
+				latlng: new kakao.maps.LatLng(35.839540, 128.707201)
+			},
+			{
+				title: '대구산격DT점', // 10
+				latlng: new kakao.maps.LatLng(35.900531, 128.615217)
+			},
+			{
+				title: '대구대명FS점', // 11
+				latlng: new kakao.maps.LatLng(35.900531, 128.615217)
+			},
+			{
+				title: '대구중앙로점', // 12
+				latlng: new kakao.maps.LatLng(35.868533, 128.593870)
+			},
+			{
+				title: '대구이시아폴리스점', // 13
+				latlng: new kakao.maps.LatLng(35.920448, 128.635669)
+			},
+			{
+				title: '대구서재FS점', // 14
+				latlng: new kakao.maps.LatLng(35.869450, 128.496642)
+			},
+			{
+				title: '대구테크노폴리스점', // 15
+				latlng: new kakao.maps.LatLng(35.692319, 128.457561)
+			},
+			{
+				title: '대구칠곡3지구점', // 16
+				latlng: new kakao.maps.LatLng(35.943835, 128.558628)
+			},
+			{
+				title: '대구월촌역FS점', // 17
+				latlng: new kakao.maps.LatLng(35.823904, 128.546227)
+			},
+			{
+				title: '대구신서혁신도시DT점', // 18
+				latlng: new kakao.maps.LatLng(35.878572, 128.727451)
+			},
+			{
+				title: '대구연경점', // 19
+				latlng: new kakao.maps.LatLng(35.942368, 128.616102)
+			}
+		];
+
 		var mapContainer = document.getElementById('map') // 지도를 표시할 div 
 		var mapOption = {
 			center: new kakao.maps.LatLng(35.877015, 128.626125), // 지도의 중심좌표
 			level: 3, // 지도의 확대 레벨
 			mapTypeId: kakao.maps.MapTypeId.ROADMAP // 지도종류
 		};
-
+		
 		var map = new kakao.maps.Map(mapContainer, mapOption);
 
-		if (navigator.geolocation) {
+		var imageSrc = "https://github.com/peaks26/kakaoMapAPI/blob/main/index.png?raw=true";
 
-			// GeoLocation을 이용해서 접속 위치를 얻어옵니다
-			navigator.geolocation.getCurrentPosition(function (position) {
+		for (var i = 0; i < positions.length; i++) {
 
-				var lat = position.coords.latitude, // 위도
-					lon = position.coords.longitude; // 경도
+			// 마커 이미지의 이미지 크기 입니다
+			var imageSize = new kakao.maps.Size(58, 80);
 
-				var locPosition = new kakao.maps.LatLng(lat, lon), // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
-					message = '<div style="padding:5px;">현재위치</div>'; // 인포윈도우에 표시될 내용입니다
-
-				// 마커와 인포윈도우를 표시합니다
-				displayMarker(locPosition, message);
-
-			});
-
-		} else { // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
-
-			var locPosition = new kakao.maps.LatLng(35.877015, 128.626125),
-				message = 'geolocation을 사용할수 없어요..'
-
-			displayMarker(locPosition, message);
-		}
-
-		// 마커 이미지의 주소
-		var markerImageUrl = 'https://github.com/peaks26/kakaoMapAPI/blob/main/index.png?raw=true',
-			markerImageSize = new kakao.maps.Size(40, 42), // 마커 이미지의 크기
-			markerImageOptions = {
-				offset: new kakao.maps.Point(20, 42) // 마커 좌표에 일치시킬 이미지 안의 좌표
-			};
-
-		// 마커 이미지를 생성한다
-		var markerImage = new kakao.maps.MarkerImage(markerImageUrl, markerImageSize, markerImageOptions);
-
-		// 지도에 마커를 생성하고 표시한다
-		var marker = new kakao.maps.Marker({
-			position: new kakao.maps.LatLng(37.56682, 126.97865), // 마커의 좌표
-			image: markerImage, // 마커의 이미지
-			map: map // 마커를 표시할 지도 객체
-		});
-
-		// lag, lng 위치로 이동도하고, 그 위에 마커도 쓴다.
-		function setCenter(lat, lng) {
-			marker.setMap(null); // 기존마커 삭제
-			var pos = new kakao.maps.LatLng(lat, lng); // 내가 원하는 위치를 받아옴
-			map.setCenter(pos); // 맵 이동
-			marker = new kakao.maps.Marker({
-				position: pos
-			})
-			marker.setMap(map);
-		}
-
-		// 지도에 마커와 인포윈도우를 표시하는 함수입니다
-		function displayMarker(locPosition, message) {
+			// 마커 이미지를 생성합니다    
+			var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
 
 			// 마커를 생성합니다
 			var marker = new kakao.maps.Marker({
-				map: map,
-				position: locPosition
+				map: map, // 마커를 표시할 지도
+				position: positions[i].latlng, // 마커를 표시할 위치
+				title: positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+				image: markerImage // 마커 이미지 
 			});
 
-			var iwContent = message, // 인포윈도우에 표시할 내용
-				iwRemoveable = true;
+			// lag, lng 위치로 이동도하고, 그 위에 마커도 쓴다.
+			function setCenter(lat, lng) {
+				marker.setMap(null); // 기존마커 삭제
+				var pos = new kakao.maps.LatLng(lat, lng); // 내가 원하는 위치를 받아옴
+				map.setCenter(pos); // 맵 이동
+				marker = new kakao.maps.Marker({
+					position: pos
+				})
+				marker.setMap(map);
+			}
 
-			// 인포윈도우를 생성합니다
-			var infowindow = new kakao.maps.InfoWindow({
-				content: iwContent,
-				removable: iwRemoveable
-			});
+			// 지도에 마커와 인포윈도우를 표시하는 함수입니다
+			function displayMarker(locPosition, message) {
 
-			// 인포윈도우를 마커위에 표시합니다 
-			infowindow.open(map, marker);
+				// 마커를 생성합니다
+				var marker = new kakao.maps.Marker({
+					map: map,
+					position: locPosition
+				});
 
-			// 지도 중심좌표를 접속위치로 변경합니다
-			map.setCenter(locPosition);
-		}
+				var iwContent = message, // 인포윈도우에 표시할 내용
+					iwRemoveable = true;
+
+				// 인포윈도우를 생성합니다
+				var infowindow = new kakao.maps.InfoWindow({
+					content: iwContent,
+					removable: iwRemoveable
+				});
+
+				// 인포윈도우를 마커위에 표시합니다 
+				infowindow.open(map, marker);
+
+				// 지도 중심좌표를 접속위치로 변경합니다
+				map.setCenter(locPosition);
+			}
 	</script>
 </body>
 
