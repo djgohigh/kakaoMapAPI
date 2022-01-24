@@ -12,11 +12,17 @@
     <script>
         new daum.Postcode({
             oncomplete: function (data) {
+                let obj = new Object();
                 var roadAddr = data.roadAddress;
-                var postcode = data.zonecode;
+                var pcode = data.zonecode;
+                
+                obj.address = roadAddr;
+                obj.postcode = pcode;
+
                 
                 console.log(roadAddr);
                 console.log(postcode);
+                console.log(obj);
             }
         }).open();
     </script>
