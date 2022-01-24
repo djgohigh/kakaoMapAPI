@@ -8,17 +8,20 @@
     <!-- 주소 검색 -->
     <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script>
-        new daum.Postcode({
-            oncomplete: function(data) {
-                var zipCode = data.zonecode
-                var address = data.roadAddress
-                
-                window.external.CallForm(zipCode, address)
-            }
-        }).open();
+        fucntion submitToForm(){
+            new daum.Postcode({
+                oncomplete: function(data) {
+                    var zipCode = data.zonecode
+                    var address = data.roadAddress
+
+                    window.external.CallForm(zipCode, address)
+                }
+            }).open()
+        }
     </script>
 </head>
 <body>
-    <div id='layer' style='position:fixed;overflow:hidden;z-index:1;-webkit-overflow-scrolling:touch;'></div>
+    <input type="text" id="text1" name="text1"></input>
+	<input type="button" id="btn1" name="btn1" value="submit" onclick="submitToForm()"></input>
 </body>
 </html>
