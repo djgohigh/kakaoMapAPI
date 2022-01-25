@@ -12,7 +12,7 @@
     <script>
     new daum.Postcode({
         oncomplete: function(data) {
-            window.external.CallForm(data.zonecode, data.address);
+            cAPI.CallForm(data.zonecode, data.address);
         }
     }).open();
 </script>
